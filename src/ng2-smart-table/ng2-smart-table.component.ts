@@ -20,6 +20,7 @@ export class Ng2SmartTableComponent implements OnChanges {
   @Output() userRowSelect = new EventEmitter<any>();
   @Output() delete = new EventEmitter<any>();
   @Output() edit = new EventEmitter<any>();
+  @Output() custom = new EventEmitter<any>();
   @Output() create = new EventEmitter<any>();
   @Output() deleteConfirm = new EventEmitter<any>();
   @Output() editConfirm = new EventEmitter<any>();
@@ -38,6 +39,7 @@ export class Ng2SmartTableComponent implements OnChanges {
       add: true,
       edit: true,
       delete: true,
+      custom: [],
       position: 'left', // left|right
     },
     filter: {

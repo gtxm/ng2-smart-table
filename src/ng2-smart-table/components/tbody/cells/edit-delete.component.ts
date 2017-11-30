@@ -6,6 +6,10 @@ import { Row } from '../../../lib/data-set/row';
 @Component({
   selector: 'ng2-st-tbody-edit-delete',
   template: `
+    <a *ngFor="let action of grid.getSetting('actions.custom')" href="#"
+         class="ng2-smart-action ng2-smart-action-custom-custom" 
+         [innerHTML]="action.title"
+         (click)="onCustom(action, $event)"></a>
     <a href="#" *ngIf="grid.getSetting('actions.edit')" class="ng2-smart-action ng2-smart-action-edit-edit"
         [innerHTML]="grid.getSetting('edit.editButtonContent')" (click)="onEdit($event)"></a>
     <a href="#" *ngIf="grid.getSetting('actions.delete')" class="ng2-smart-action ng2-smart-action-delete-delete"
@@ -20,6 +24,7 @@ export class TbodyEditDeleteComponent {
   @Input() deleteConfirm: EventEmitter<any>;
   @Input() editConfirm: EventEmitter<any>;
 
+  @Output() custom = new EventEmitter<any>();
   @Output() edit = new EventEmitter<any>();
   @Output() delete = new EventEmitter<any>();
   @Output() editRowSelect = new EventEmitter<any>();
@@ -52,5 +57,15 @@ export class TbodyEditDeleteComponent {
     } else {
       this.grid.delete(this.row, this.deleteConfirm);
     }
+  }
+  onCustom(action: any, event: any) {
+    event.preventDefault();
+    event.stopPropagation();
+
+    this.custom.emit({
+      action: action.name,
+      data: this.row.getData(),
+      source: this.source
+    });
   }
 }
